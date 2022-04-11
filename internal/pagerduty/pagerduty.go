@@ -52,19 +52,14 @@ func getOncallUserID(client *pagerduty.Client, policyID string) string {
 }
 
 func getUserEmailFromID(client *pagerduty.Client, userID string) string {
-
-	// Get the user's email address from PagerDuty
-	var uEmail string
-	uEmail = "jake@cypress.io"
 	var userOpts pagerduty.GetUserOptions
 	pdUser, err := client.GetUser(userID, userOpts)
 	if err != nil {
 		panic(err)
 	}
 	fmt.Printf("%s\n", pdUser.Email)
-	fmt.Printf("Email we'll use: %s\n", uEmail)
 
-	return uEmail
+	return pdUser.Email
 }
 
 func GetOncallUserEmail(config config.Config, escalationPolicy string) string {
