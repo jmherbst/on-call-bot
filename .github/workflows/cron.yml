@@ -1,0 +1,22 @@
+name: Cron
+
+on:
+  # Triggers the workflow every 5 minutes
+  schedule:
+    - cron: "1 * * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build Docker Image
+      uses: docker/build-push-action@v2
+      with:
+        tags: on-call-bot:latest
+        push: false
+    - name: Execute On-Call Bot
+      uses: addnab/docker-run-action@v3
+      with:
+        image: on-call-bot:latest
+        options: --env PAGERDUTY_TOKEN=${{ secrets.PAGERDUTY_TOKEN }} --env SLACK_TOKEN=${{ secrets.SLACK_TOKEN }}
+        run: /app/on-call-bot
