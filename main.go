@@ -8,11 +8,11 @@ import (
 	"github.com/cypress-io/on-call-bot/internal/slack"
 )
 
-func main() {
+func updateSlackGroupsWithOnCall() (string, error) {
 	cfg, cfgErr := config.GetConfig()
 	if cfgErr != nil {
 		fmt.Printf("%s", cfgErr)
-		return
+		return "Error", cfgErr
 	}
 
 	for escalationPolicy, slackUserGroupHandle := range cfg.Mappings {
@@ -24,4 +24,10 @@ func main() {
 
 		fmt.Printf("Updated Slack user group(%s) with person on-call for PagerDuty policy('%s')\n", slackUserGroupHandle, escalationPolicy)
 	}
+
+	return "Success", nil
+}
+
+func main() {
+	updateSlackGroupsWithOnCall()
 }

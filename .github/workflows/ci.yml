@@ -12,7 +12,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    # Checkout
+    - name: Checkout
+      uses: actions/checkout@v3
 
     # Setup Go
     - name: Setup Go
@@ -24,6 +26,12 @@ jobs:
     - name: Run build
       run: go build .
 
-    # Run on the code
-    - name: Run vet & lint
+    # Vet on the code
+    - name: Run vet
       run: go vet .
+
+    - name: Testing Docker Build
+      uses: docker/build-push-action@v2
+      with:
+        tags: on-call-bot:latest
+        push: false
