@@ -12,7 +12,6 @@ func getClient(config config.Config) *pagerduty.Client {
 }
 
 // TODO Fix panic errs
-// TODO Remove hardcoded email
 
 func getPolicyID(client *pagerduty.Client, escalationPolicy string) string {
 	var opts pagerduty.ListEscalationPoliciesOptions
